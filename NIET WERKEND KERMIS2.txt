@@ -1,0 +1,108 @@
+// welkom op de kermis
+// wilt u weten welke attracties we hebben toets 1
+// menukaart met attracties
+// welke attractie wilt u spelen?
+// de prijs van attractie is bedrag per person
+// met z'n hoevelen?
+// goed dat kost u in totaal bedrag x.
+// omzet kasboek
+// betalen
+// als betaald dan spelen
+
+import java.util.Scanner;
+
+public class Kermisopbouw {
+
+	public static void main(String[] args) {
+		Kassa kermis = new Kassa();
+		kermis.kassadraaien();
+	}
+}
+
+class Kassa {
+	void kassadraaien() {
+		int aantalAttracties = 2;									// hier wordt het aantal attracties voor de array bepaald
+		Attractie[] attracties = new Attractie[aantalAttracties];  // dit is array voor alle attracties
+		Eindespel einde = new Eindespel();
+		Omzet omzet = new Omzet();
+		Scanner startKermis = new Scanner(System.in);
+		Scanner keuzeAttractie = new Scanner(System.in);
+		Scanner aantalKaartjes = new Scanner(System.in);
+		System.out.println("Als u naar de kermis wilt, toets 1. Wilt u de kermis verlaten, toets 0.");
+		int start = startKermis.nextInt();
+		while (start > 1) {
+			System.out.println("Sorry joh, keuze " + start + " is ongeldig. Maak je keuze opnieuw. 1 om te beginnen, 0 om te stoppen.");
+			start = startKermis.nextInt();
+		}
+
+		if (start == 1) {
+			System.out.println("OK, we gaan beginnen.");	
+			System.out.println("");
+			//		} else Eindespel(); {				// als start == 0 dan moet einde spel lukt niet
+			//		}
+
+			attracties[0] = new Botsauto();		// het vullen van array veld met adres
+			attracties[1] = new Spin();
+
+			System.out.println("We hebben de volgende attracties met het bijbehorende tarief: ");
+			for (int i = 0; i < attracties.length; i++) {
+				System.out.println("Nr. " + (i+1) + ": Attractienaam: " + attracties[i].naam + "     Entreeprijs: € " + attracties[i].entree + "0 p.p.");
+			}
+			System.out.println("");
+			System.out.println("Welke attractie wilt u bezoeken? Maak uw keuze gevolgd door <Enter>.");
+			int keuzeA = keuzeAttractie.nextInt();
+			while (keuzeA > attracties.length) {
+				System.out.println("Sorry joh, keuze " + keuzeA + " is ongeldig.");
+				System.out.println("");
+				System.out.println("We hebben de volgende attracties met het bijbehorende tarief: ");
+				System.out.println("");
+				for (int i = 0; i < attracties.length; i++) {
+					System.out.println("Nr. " + (i+1) + ": Attractienaam: " + attracties[i].naam + "     Entreeprijs: € " + attracties[i].entree + "0 p.p.");
+				}
+				System.out.println("");
+				System.out.println("Maak uw keuze opnieuw. Welke attractie wilt u bezoeken?");
+				System.out.println("Maak uw keuze gevolgd door <Enter>. Kies 0 om te stoppen.");
+				keuzeA = keuzeAttractie.nextInt();
+			}
+			System.out.println(attracties[keuzeA-1].naam + " is een uitstekende keuze!");
+			System.out.println("Hoeveel kaartjes wilt u hebben?");
+			int aantalK = aantalKaartjes.nextInt();
+			System.out.println("U wilt " + aantalK + " kaartjes hebben voor "+ attracties[keuzeA-1].naam );
+			double teBetalenBedrag = (aantalK)*(attracties[keuzeA-1].entree);
+			System.out.println("Dat wordt dan € " + teBetalenBedrag + "0 alstublieft.");
+		}
+	}
+
+	class Attractie {
+		double entree;
+		String naam;
+		int aantalDeelnemers;
+	}
+
+	class Botsauto extends Attractie {
+		Botsauto() { 			// constructor om de waarde van de entree prijs te vullen
+			entree = 3.20;
+			naam = "Botsauto";
+
+		}
+	}
+
+	class Spin extends Attractie {
+		Spin() { 			// constructor om de waarde van de entree prijs te vullen
+			entree = 2.50;
+			naam = "Spin";
+		}
+	}
+
+	class Eindespel extends Kassa {
+		Eindespel() { 			// constructor eindespel te forceren
+			//		System.out.println("No worries.");
+		}
+
+		class Omzet{
+			double omzet;		// dit is slechts een hersenspinsel, omzet moet wel een double zijn
+			Omzet(double a) {	// dit is slechts een hersenspinsel, omzet moet wel een double zijn
+			}
+		}
+	}
+}
